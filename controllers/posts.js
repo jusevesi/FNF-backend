@@ -6,7 +6,7 @@ const TwitterService = require('../services/twitter');
 const profileGet = async (req, res = response) => {
     //Pagination parameters in req.query
     const { name } = req.params;
-    const { page = 1, limit = 5 } = req.query;
+    const { page = 1, limit = 10 } = req.query;
     const from = limit * (page - 1);
     //Twitter Service
     const twitterService = new TwitterService();
@@ -25,7 +25,7 @@ const profileGet = async (req, res = response) => {
 
 const postGet = async (req, res = response) => {
     //Pagination parameters in req.query
-    const { page = 1, limit = 5 } = req.query;
+    const { page = 1, limit = 10 } = req.query;
     const from = limit * (page - 1);
 
     //Promise optimization, multiple promises at once
