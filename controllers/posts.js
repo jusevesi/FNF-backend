@@ -1,6 +1,8 @@
 const { response } = require('express');
 
 const Post = require('../models/posts');
+const User = require('../models/user');
+
 const TwitterService = require('../services/twitter');
 
 const profileGet = async (req, res = response) => {
@@ -13,11 +15,14 @@ const profileGet = async (req, res = response) => {
     const userId = await twitterService.getUserIdByUsername(name);
     const tweets = await twitterService.getTwitsById(userId);
 
-    const posts = await Post.find({ name }).sort({date:-1})
-            .skip(from)
-            .limit(+limit)
-    
+    const posts = await Post.find({ name }).sort({ date: -1 })
+        .skip(from)
+        .limit(+limit)
+
+    const [user] = await User.find({ name })
+
     res.json({
+        user,
         posts,
         tweets
     });
@@ -31,7 +36,7 @@ const postGet = async (req, res = response) => {
     //Promise optimization, multiple promises at once
     const [total, posts] = await Promise.all([
         Post.countDocuments(),
-        Post.find().sort({date:-1})
+        Post.find().sort({ date: -1 })
             .skip(from)
             .limit(+limit)
     ]);
@@ -57,9 +62,10 @@ const postPost = async (req, res = response) => {
 
 const postPut = async (req, res = response) => {
     const { id } = req.params;
-    const { name, ...data } = req.body;
+    const { msg, img } = req.body;
+    const date = new Date();
 
-    const post = await Post.findByIdAndUpdate(id, data)
+    const post = await Post.findByIdAndUpdate(id, { msg, date, img })
 
     res.json({
         msg: "Post Updated!",
