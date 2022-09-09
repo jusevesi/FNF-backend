@@ -9,6 +9,12 @@ const validateLogin = [
     validateFields
 ];
 
+const validateGoogle = [
+    check('email','The email is not valid').isEmail(),
+    check('password','The password is necessary').not().isEmpty(),
+    validateFields
+];
+
 const validateRegister = [
     check('name', 'The name is necessary').not().isEmpty(),
     check('password', 'Your password must have at least 8 characters, one lowercase letter, one uppercase letter, one number and one special characters').isStrongPassword({ minLength: 8, minNumbers: 1, minLowercase: 1, minUppercase: 1, minSymbols: 1 }),
@@ -25,6 +31,7 @@ const validateId = [
 
 module.exports = {
     validateLogin,
+    validateGoogle,
     validateRegister,
     validateId
 }
