@@ -21,8 +21,8 @@ const login = async (req, res = response) => {
             });
         }
         //Password validation
-        const validPassword = bcryptjs.compareSync( password, user.password);
-        if (!validPassword){
+        const validPassword = bcryptjs.compareSync(password, user.password);
+        if (!validPassword) {
             return res.status(400).json({
                 msg: 'Password or Email invalid'
             })
@@ -43,7 +43,18 @@ const login = async (req, res = response) => {
     }
 }
 
+const googleSignIn = async(req, res = response) =>{
+    
+    const {id_token} = req.body;
+
+    res.json({
+        msg:'ok!',
+        id_token
+    })
+
+}
 
 module.exports = {
-    login
+    login,
+    googleSignIn
 }

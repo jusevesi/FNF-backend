@@ -10,8 +10,7 @@ const validateLogin = [
 ];
 
 const validateGoogle = [
-    check('email','The email is not valid').isEmail(),
-    check('password','The password is necessary').not().isEmpty(),
+    check('id_token','id_token is necessary').not().isEmpty(),
     validateFields
 ];
 
